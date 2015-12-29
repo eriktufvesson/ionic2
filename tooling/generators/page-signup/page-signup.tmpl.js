@@ -1,9 +1,9 @@
-import {FormBuilder, Validators} from 'angular2/angular2';
+import {FormBuilder, Validators} from 'angular2/common';
 import {Page, NavController} from 'ionic/ionic';
 
 
 @Page({
-  templateUrl: 'app/<%= fileName %>/<%= fileName %>.html'
+  templateUrl: 'build/pages/<%= fileName %>/<%= fileName %>.html'
 })
 export class <%= jsClassName %> {
   constructor(nav: NavController) {
@@ -19,13 +19,14 @@ export class <%= jsClassName %> {
   }
 
   doLogin() {
+    console.log('Navigating back to the Login Page');
     this.nav.pop()
   }
 
   doSignup() {
     console.log(this.signupForm.value);
 
-    this.nav.push(AppPage);
+    //this.nav.push(AppPage);
   }
 
 }

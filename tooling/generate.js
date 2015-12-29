@@ -39,17 +39,20 @@ Generate.generate = function generate(options) {
   if (!options.generator) {
     options.generator = 'page';
   }
+  
+  options.dirName = Generate.getGeneratorDirectoryName(options.generator);
 
   var generateOptions = {
     appDirectory: options.appDirectory,
     cssClassName: Generate.cssClassName(options.name),
     fileName: Generate.fileName(options.name),
+    rootDirectory: path.join('app', options.dirName),
     jsClassName: Generate.jsClassName(options.name),
     name: options.name,
     template: options.generator
   };
 
-  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, fileName: generateOptions.fileName});
+  Generate.createScaffoldDirectories({appDirectory: options.appDirectory, dirName: options.dirName, fileName: generateOptions.fileName});
 
   try {
     //Try to run the generator if it supplies a run method.
@@ -63,6 +66,27 @@ Generate.generate = function generate(options) {
     console.log('Error with generation:', ex);
     console.log(ex.stack);
   }
+};
+
+Generate.getGeneratorDirectoryName = function(generatorName) {
+  switch (generatorName) {
+      case 'page':
+      case 'page-login':
+      case 'page-sidemenu':
+      case 'page-signup':
+      case 'tabs':
+        return 'pages';
+      case 'component':
+        return 'components';
+      case 'directive':
+        return 'directives';
+      case 'injectable':
+        return 'injectables';
+      case 'pipe':
+        return 'pipes';
+      default:
+        return '';
+  }  
 };
 
 Generate.defaultTemplates = function defaultTemplates(options) {
@@ -153,7 +177,7 @@ Generate.tabPages = function tabPages(appDirectory, name, tabs) {
   var tabsHtml = Generate.generateTabsHtmlTemplate(appDirectory, name, tabs);
   var tabsJs = Generate.generateTabsJsTemplate(appDirectory, name, tabs);
   // var tabsScss = Generate.generateTabsScssTemplate(appDirectory, name, tabs);
-  var pagePath = path.join(appDirectory, 'www', 'app', tabsfileName),
+  var pagePath = path.join(appDirectory, 'app', 'pages', tabsfileName),
       jsPath = path.join(pagePath, [tabsfileName, '.js'].join('')),
       htmlPath = path.join(pagePath, [tabsfileName, '.html'].join(''));
       // scssPath = path.join(pagePath, [tabsfileName, '.scss'].join(''));
@@ -201,8 +225,9 @@ Generate.generateTabsJsTemplate = function generateTabsJsTemplate(appDirectory, 
 };
 
 Generate.createScaffoldDirectories = function createScaffoldDirectories(options) {
-  // Generate.log('Create', options.appDirectory, options.fileName);
-  var componentPath = path.join(options.appDirectory, 'www', 'app', options.fileName);
+  //Generate.log('Create', options.appDirectory, options.fileName);
+  options.dirName = options.dirName || '';
+  var componentPath = path.join(options.appDirectory, 'app', options.dirName, options.fileName);
   shell.mkdir('-p', componentPath);
 };
 

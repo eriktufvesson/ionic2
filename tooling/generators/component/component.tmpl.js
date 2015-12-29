@@ -1,10 +1,11 @@
-import {Component, NgIf} from 'angular2/angular2';
+import {Component} from 'angular2/core';
+import {NgIf} from 'angular2/common';
 
 @Component({
   directives: [NgIf],
-  properties: ['value'], //Change to be whatever properties you want, ex: <<%= fileAndClassName %> value="5">
+  properties: ['value'], //Change to be whatever properties you want, ex: <<%= fileName %> value="5">
   selector: '<%= fileName %>',
-  templateUrl: 'app/<%= fileName %>/<%= fileName %>.html'
+  templateUrl: 'build/components/<%= fileName %>/<%= fileName %>.html'
 })
 export class <%= jsClassName %> {
   constructor() {

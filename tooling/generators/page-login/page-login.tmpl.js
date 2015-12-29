@@ -1,11 +1,12 @@
-import {FormBuilder, Validators} from 'angular2/angular2';
-import {Page, NavController} from 'ionic/ionic'
+import {FormBuilder, Validators} from 'angular2/common';
+import {Page, NavController} from 'ionic/ionic';
+//import {SignupPage} from '../signup-page/signup-page';
 
 
 @Page({
-  templateUrl: 'app/<%= fileName %>/<%= fileName %>.html'
+  templateUrl: 'build/pages/<%= fileName %>/<%= fileName %>.html'
 })
-class <%= jsClassName %> {
+export class <%= jsClassName %> {
   constructor(nav: NavController ) {
     this.nav = nav;
 
@@ -23,7 +24,7 @@ class <%= jsClassName %> {
   }
 
   doSignup() {
-    this.nav.push(SignupPage)
+    this.nav.push(SignupPage); //The SignupPage page needs to be imported at the top
   }
 
 }

@@ -1,18 +1,23 @@
-<ion-view nav-title="Signup" style="padding: 20px">
-  <form (submit)="doSignup($event)" [control-group]="signupForm">
-    <ion-input>
-      <input control="name" type="text" placeholder="Your name">
-    </ion-input>
-    <ion-input>
-      <input control="email" type="email" placeholder="Your email">
-    </ion-input>
-    <ion-input>
-      <input control="password" type="password" placeholder="Your password">
-    </ion-input>
-    <button dark block type="submit">Create account</button>
-    <div>
-      <button block (click)="doLogin()">Log in</button>
-    </div>
-  </form>
-</ion-view>
+<ion-navbar *navbar>
+    <ion-title>
+        <%= jsClassName %>
+    </ion-title>
+</ion-navbar>
 
+<ion-view nav-title="Signup" style="padding: 20px">
+    <form (submit)="doSignup($event)" [ngFormModel]="signupForm">
+        <ion-input>
+            <input ngControl="name" type="text" placeholder="Your name">
+        </ion-input>
+        <ion-input>
+            <input ngControl="email" type="email" placeholder="Your email">
+        </ion-input>
+        <ion-input>
+            <input ngControl="password" type="password" placeholder="Your password">
+        </ion-input>
+        <button dark block type="submit">Create account</button>
+    </form>
+    <div>
+        <button block (click)="doLogin()">Log in</button>
+    </div>
+</ion-view>

@@ -1,4 +1,4 @@
-import {Injectable, Pipe} from 'angular2/angular2';
+import {Injectable, Pipe} from 'angular2/core';
 
 @Pipe({
   name: '<%= fileName %>'

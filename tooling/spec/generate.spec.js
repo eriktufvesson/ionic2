@@ -65,6 +65,7 @@ describe('#Generate', function() {
         appDirectory: '/fake/ionic/path',
         cssClassName: 'about',
         fileName: 'about',
+        rootDirectory: path.join('app', 'pages'),
         jsClassName: 'About',
         name: 'About', 
         template: 'page'
@@ -105,7 +106,7 @@ describe('#Generate', function() {
       // create directories if not existing: /www, /www/app, /www/app/about
       // create files in dir: /www/app/about/
       // about.html, about.scss, about.js
-      var appDir = '/ionic/app';
+      var appDir = '/ionic/TestApp';
       spyOn(Generate, 'createScaffoldDirectories');
       spyOn(fs, 'writeFileSync');
 
@@ -119,15 +120,15 @@ describe('#Generate', function() {
       // console.log(fs.writeFileSync.calls);
       expect(fs.writeFileSync.calls.length).toBe(3);
       var htmlSaveCall = fs.writeFileSync.calls[0];
-      expect(fs.writeFileSync.calls[0].args[0]).toBe('/ionic/app/www/app/my-page/my-page.html');
+      expect(fs.writeFileSync.calls[0].args[0]).toBe(path.join('/ionic/TestApp/app/pages/my-page/my-page.html'));
       expect(fs.writeFileSync.calls[0].args[1]).toContain('<ion-title>MyPage</ion-title>');
       expect(fs.writeFileSync.calls[0].args[1]).toContain('<ion-content padding class="my-page">');
 
-      expect(fs.writeFileSync.calls[1].args[0]).toBe('/ionic/app/www/app/my-page/my-page.js');
-      expect(fs.writeFileSync.calls[1].args[1]).toContain('templateUrl: \'app/my-page/my-page.html\'');
+      expect(fs.writeFileSync.calls[1].args[0]).toBe(path.join('/ionic/TestApp/app/pages/my-page/my-page.js'));
+      expect(fs.writeFileSync.calls[1].args[1]).toContain('templateUrl: \'build/pages/my-page/my-page.html\'');
       expect(fs.writeFileSync.calls[1].args[1]).toContain('export class MyPage {');
 
-      expect(fs.writeFileSync.calls[2].args[0]).toBe('/ionic/app/www/app/my-page/my-page.scss');
+      expect(fs.writeFileSync.calls[2].args[0]).toBe(path.join('/ionic/TestApp/app/pages/my-page/my-page.scss'));
       expect(fs.writeFileSync.calls[2].args[1]).toContain('.my-page {');
     });
   }); //#page
@@ -138,8 +139,8 @@ describe('#Generate', function() {
       // ionic g page about
       // create folders in /ionic/app/www/app/about
       spyOn(shell, 'mkdir');
-      Generate.createScaffoldDirectories({appDirectory: '/ionic/app', fileName: 'about'});
-      expect(shell.mkdir).toHaveBeenCalledWith('-p', '/ionic/app/www/app/about');
+      Generate.createScaffoldDirectories({appDirectory: '/ionic/TestApp', dirName: 'pages', fileName: 'about'});
+      expect(shell.mkdir).toHaveBeenCalledWith('-p', path.join('/ionic/TestApp/app/pages/about'));
     });
   }); //#directories
 
